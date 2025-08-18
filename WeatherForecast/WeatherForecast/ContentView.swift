@@ -9,10 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        HStack {
-            DayForecast(day: "Mon", isRainy: false, high: 70, low: 50)
-            
-            DayForecast(day: "Tue", isRainy: true, high: 60, low: 40)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                DayForecast(day: "Mon", isRainy: false, high: 70, low: 50)
+                
+                DayForecast(day: "Tue", isRainy: true, high: 60, low: 40)
+                
+                DayForecast(day: "Wed", isRainy: false, high: 60, low: 50)
+                
+                DayForecast(day: "Thu", isRainy: false, high: 90, low: 65)
+                
+                DayForecast(day: "Fri", isRainy: false, high: 80, low: 60)
+                
+                DayForecast(day: "Say", isRainy: false, high: 60, low: 40)
+                
+                DayForecast(day: "Sun", isRainy: true, high: 55, low: 30)
+            }
         }
         .padding()
     }
@@ -53,10 +65,21 @@ struct DayForecast: View {
                 .foregroundStyle(iconColor)
                 .font(.largeTitle)
                 .padding(5)
-            Text("High: \(high)")
-                .fontWeight(Font.Weight.semibold)
-            Text("Low: \(low)")
-                .fontWeight(Font.Weight.medium)
+            HStack(spacing: 0) {
+                Text("High: ")
+                Text("\(high)")
+                    .foregroundStyle(high > 80 ? Color.red : Color.black)
+            }
+            .fontWeight(Font.Weight.semibold)
+            HStack(spacing: 0) {
+                Text("Low: ")
+                Text("\(low)")
+                    .foregroundStyle(low < 60 ? Color.green : Color.black)
+            }
+            .fontWeight(Font.Weight.medium)
         }
+        .padding()
+        .background(Color.teal, in: RoundedRectangle(cornerRadius: 8))
+        .shadow(radius: 6)
     }
 }
