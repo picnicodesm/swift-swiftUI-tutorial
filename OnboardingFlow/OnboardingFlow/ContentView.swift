@@ -9,6 +9,7 @@ import SwiftUI
 
 let gradientColors: [Color] = [
     .gradientTop,
+    .gradientMiddle,
     .gradientBottom
 ]
 
