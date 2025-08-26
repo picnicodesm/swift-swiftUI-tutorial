@@ -15,4 +15,9 @@ struct Scoreboard {
         Player(name: "Jasmine", score: 0, color: Color.teal),
     ]
     
+    var state = GameState.setup
+    
+    mutating func resetScores(to newValue: Int) {
+        
+    }
 }
