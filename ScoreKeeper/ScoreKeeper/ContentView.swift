@@ -8,56 +8,48 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var players: [Player] = [
-        Player(name: "Elisha", score: 0, color: Color.blue),
-        Player(name: "Andre", score: 0, color: Color.brown),
-        Player(name: "Jasmine", score: 0, color: Color.teal),
-    ]
-    
-    
+    @State private var scoreboard = Scoreboard()
+
     var body: some View {
-        NavigationView {
-            List {
-                Section {
-                    ForEach($players) { $player in
-                        HStack {
-                            Text("\(player.name)")
-                                .foregroundStyle(player.color)
-                            Spacer()
-                            Text("\(player.score)")
-                                .padding(.trailing, 10)
-                            Stepper(value: $player.score, in: 0...20) {
-                                Text("\(player.score)")
-                            }
-                            .labelsHidden()
-                        }
-                    }
-                    .onMove(perform: {
-                        players.move(fromOffsets: $0, toOffset: $1)
-                    })
-                    
-                    Button("Add Player", systemImage: "plus") {
-                        players.append(Player(name: " ", score: 0, color: .black))
-                    }
-                } header: {
-                    HStack {
-                        Text("Player")
-                            .gridColumnAlignment(.leading)
-                        Spacer()
-                            .frame(width: 130)
-                        Text("Score")
-                    }
-                    .font(.headline)
+        VStack(alignment: .leading) {
+            Text("Score Keeper")
+                .font(.title)
+                .bold()
+                .padding(.bottom)
+
+
+            Grid {
+                GridRow {
+                    Text("Player")
+                        .gridColumnAlignment(.leading)
+                    Text("Score")
                 }
-                
+                .font(.headline)
+
+
+                ForEach($scoreboard.players) { $player in
+                    GridRow {
+                        TextField("Name", text: $player.name)
+                        Text("\(player.score)")
+                        Stepper("\(player.score)", value: $player.score)
+                            .labelsHidden()
+                    }
+                }
             }
-            .navigationTitle("Score Keeper")
-            .toolbar {
-                EditButton()
+            .padding(.vertical)
+
+
+            Button("Add Player", systemImage: "plus") {
+                scoreboard.players.append(Player(name: "", score: 0, color: .black))
             }
+
+
+            Spacer()
         }
+        .padding()
     }
 }
+
 #Preview {
     ContentView()
 }
